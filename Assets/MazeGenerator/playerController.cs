@@ -65,4 +65,13 @@ public class playerController : MonoBehaviour
     {
         controls.Disable();
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag.Equals("Coin"))
+        {
+            
+            Destroy(other.gameObject);
+        }
+    }
 }
