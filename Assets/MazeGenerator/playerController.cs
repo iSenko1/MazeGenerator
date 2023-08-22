@@ -16,6 +16,20 @@ public class playerController : MonoBehaviour
     public LayerMask groundMask;
     private bool isGrounded;
 
+    public AudioClip JumpSound = null;
+    public AudioClip HitSound = null;
+    public AudioClip CoinSound = null;
+    private AudioSource mAudioSource = null;
+    private Rigidbody mRigidBody = null;
+    private Animator animator;
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+        mRigidBody = GetComponent<Rigidbody>();
+        mAudioSource = GetComponent<AudioSource>();
+    }
+
     void Awake()
     {
         controls = new InputManager();
@@ -31,29 +45,47 @@ public class playerController : MonoBehaviour
         Jump();
     }
 
-/*    private void Grav()
-    {
-        isGrounded = Physics.CheckSphere(ground.position,distanceToGround,goundMask);
-        if(isGrounded && velocity.y < 0)
+    /*    private void Grav()
         {
-            velocity.y = -2f;
+            isGrounded = Physics.CheckSphere(ground.position,distanceToGround,goundMask);
+            if(isGrounded && velocity.y < 0)
+            {
+                velocity.y = -2f;
+            }
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
         }
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
-    }
-*/
+    */
     private void PlayerMovement()
     {
         move = controls.Player.Movement.ReadValue<Vector2>();
-        Vector3 movement = (move.y *transform.forward) + (move.x *transform.right);
-        controller.Move(movement *moveSpeed * Time.deltaTime);
+        Vector3 movement = (move.y * transform.forward) + (move.x * transform.right);
+        controller.Move(movement * moveSpeed * Time.deltaTime);
+
+        // Check if player is moving
+        if (move.sqrMagnitude > 0.01) // using sqrMagnitude for efficiency, comparing with a small number (0.01) to account for minor input values
+        {
+            animator.SetBool("IsMoving", true);
+        }
+        else
+        {
+            animator.SetBool("IsMoving", false);
+        }
     }
+
 
     private void Jump()
     {
-        if (controls.Player.Jump.triggered)
+        if (mRigidBody != null)
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            if (Input.GetButtonDown("Jump"))
+            {
+                if (mAudioSource != null && JumpSound != null)
+                {
+                    mAudioSource.PlayOneShot(JumpSound);
+                }
+                mRigidBody.AddForce(Vector3.up * 200);
+            }
         }
     }
 
@@ -66,11 +98,24 @@ public class playerController : MonoBehaviour
         controls.Disable();
     }
 
-    void OnTriggerEnter(Collider other)
+    
+    /*void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag.Equals("Coin"))
         {
             
+            Destroy(other.gameObject);
+        }
+    }*/
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag.Equals("Coin"))
+        {
+            if (mAudioSource != null && CoinSound != null)
+            {
+                mAudioSource.PlayOneShot(CoinSound);
+            }
             Destroy(other.gameObject);
         }
     }
