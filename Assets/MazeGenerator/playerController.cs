@@ -15,6 +15,7 @@ public class playerController : MonoBehaviour
     public float distanceToGround = 0.4f;
     public LayerMask groundMask;
     private bool isGrounded;
+    private Vector3 startPosition;
 
     public AudioClip JumpSound = null;
     public AudioClip HitSound = null;
@@ -28,6 +29,8 @@ public class playerController : MonoBehaviour
         animator = GetComponent<Animator>();
         mRigidBody = GetComponent<Rigidbody>();
         mAudioSource = GetComponent<AudioSource>();
+        startPosition = transform.position;
+
     }
 
     void Awake()
@@ -43,6 +46,10 @@ public class playerController : MonoBehaviour
         //Grav();
         PlayerMovement();
         Jump();
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Respawn();
+        }
     }
 
     /*    private void Grav()
@@ -89,6 +96,27 @@ public class playerController : MonoBehaviour
         }
     }
 
+    public void Respawn()
+    {
+        Debug.Log("Respawning player at: " + startPosition);
+        transform.position = startPosition;
+
+
+        if (mRigidBody != null)
+        {
+            mRigidBody.velocity = Vector3.zero;
+            mRigidBody.angularVelocity = Vector3.zero;
+        }
+        StartCoroutine(DisableMovementTemporarily());
+    }
+    IEnumerator DisableMovementTemporarily()
+    {
+        moveSpeed = 0;
+        yield return new WaitForSeconds(1f);
+        moveSpeed = 6f;
+    }
+
+
     private void OnEnable()
     {
         controls.Enable();
@@ -110,13 +138,19 @@ public class playerController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Trigger entered with: " + other.gameObject.name);
         if (other.gameObject.tag.Equals("Coin"))
         {
+            Respawn();
             if (mAudioSource != null && CoinSound != null)
             {
                 mAudioSource.PlayOneShot(CoinSound);
             }
             Destroy(other.gameObject);
+            controller.enabled = false;
+            Respawn();
+            controller.enabled = true;
+
         }
     }
 }
