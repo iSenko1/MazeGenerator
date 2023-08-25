@@ -1,10 +1,14 @@
 fileFormatVersion: 2
 guid: 4dbd480039f60a344bdc0ff90b9d70b5
-timeCreated: 1429848436
-licenseType: Store
 MonoImporter:
+  externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Floor: {instanceID: 0}
+  - Wall: {instanceID: 0}
+  - Pillar: {instanceID: 0}
+  - GoalPrefab: {instanceID: 0}
+  - ExitPrefab: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
