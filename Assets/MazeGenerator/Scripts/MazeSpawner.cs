@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+using UnityEngine.AI;
 
 //<summary>
 //Game object, that creates maze and instantiates it in scene
@@ -103,7 +103,6 @@ public class MazeSpawner : MonoBehaviour
 			enemyInstance.transform.parent = transform;
 		}
 
-
 		for (int row = 0; row < Rows; row++)
 		{
 			for (int column = 0; column < Columns; column++)
@@ -154,5 +153,18 @@ public class MazeSpawner : MonoBehaviour
 				}
 			}
 		}
+		// Bake the NavMesh after the maze has been instantiated
+		NavMeshSurface surface = GetComponent<NavMeshSurface>();
+		surface.BuildNavMesh();
+		GameObject enemyObj = GameObject.FindGameObjectWithTag("Enemy"); // Assuming your enemy has the tag "Enemy"
+		if (enemyObj != null)
+		{
+			EnemyNavMesh enemyScript = enemyObj.GetComponent<EnemyNavMesh>();
+			if (enemyScript != null)
+			{
+				enemyScript.isNavMeshReady = true;
+			}
+		}
+
 	}
 }
