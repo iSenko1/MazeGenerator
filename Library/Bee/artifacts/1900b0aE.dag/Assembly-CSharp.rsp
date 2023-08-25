@@ -350,6 +350,8 @@
 "Assets/MainMenu.cs"
 "Assets/MazeGenerator/Scripts/BasicMazeGenerator.cs"
 "Assets/MazeGenerator/Scripts/DivisionMazeGenerator.cs"
+"Assets/MazeGenerator/Scripts/EnemyController.cs"
+"Assets/MazeGenerator/Scripts/EnemySpawner.cs"
 "Assets/MazeGenerator/Scripts/firstPersonCamera.cs"
 "Assets/MazeGenerator/Scripts/GameManager.cs"
 "Assets/MazeGenerator/Scripts/InputManager.cs"
