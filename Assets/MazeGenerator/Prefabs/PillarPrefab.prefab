@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3354022}
   - component: {fileID: 2325300}
   - component: {fileID: 6436760}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PillarPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
