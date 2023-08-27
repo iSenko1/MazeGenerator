@@ -11,8 +11,10 @@ public class EnemyNavMesh : MonoBehaviour
 
     private NavMeshAgent navMeshAgent;
     private Animator animator;  // assume you have an Animator attached to the enemy
+    BoxCollider boxCollider;
     private Transform player;  // to keep a reference to the player
     private float nextAttackTime;
+
 
     public bool isNavMeshReady = false;
 
@@ -32,6 +34,7 @@ public class EnemyNavMesh : MonoBehaviour
     void Start()
     {
         nextAttackTime = 0.5f;  // initialize next attack time
+        boxCollider = GetComponentInChildren<BoxCollider>();
     }
 
     // Update is called once per frame
@@ -59,7 +62,7 @@ public class EnemyNavMesh : MonoBehaviour
                     // Set isMoving for the Animator
                     if (navMeshAgent.velocity.sqrMagnitude > 0.01)
                     {
-                        Debug.Log("Enemy is moving.");  // Debugging line
+                        //Debug.Log("Enemy is moving.");
                         animator.SetBool("isMoving", true);
                     }
                     else
@@ -86,6 +89,11 @@ public class EnemyNavMesh : MonoBehaviour
 
     private void Attack()
     {
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("ZombieAttack"))
+        {
+            animator.SetTrigger("Attack");
+        }
+        /*
         if (Time.time >= nextAttackTime)
         {
             animator.SetTrigger("Attack");
@@ -93,7 +101,26 @@ public class EnemyNavMesh : MonoBehaviour
             // Update the next attack time
             nextAttackTime = Time.time + 1.0f / attackRate;
         }
+        */
     }
 
+    void EnableAttack()
+    {
+        boxCollider.enabled = true;
+    }
 
+    void DisableAttack()
+    {
+        boxCollider.enabled = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        var player = other.GetComponent<playerController>();
+
+        if(player != null)
+        {
+            Debug.Log("HIT!!!");
+        }
+    }
 }

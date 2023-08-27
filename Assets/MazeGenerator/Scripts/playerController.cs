@@ -181,6 +181,11 @@ public class playerController : MonoBehaviour
             controller.enabled = true;
         }
 
+        if (other.gameObject.tag == "Enemy")
+        {
+            Debug.Log("Triggered with enemy");
+        }
+
         if (other.CompareTag("exitPrefab"))
         {
             //ResetHighScore();
