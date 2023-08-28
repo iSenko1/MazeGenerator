@@ -136,6 +136,7 @@ public class playerController : MonoBehaviour
 
     public void Respawn()
     {
+        Debug.Log("Respawning player.");
         transform.position = startPosition;
         playerYVelocity = 0;
         StartCoroutine(DisableMovementTemporarily());

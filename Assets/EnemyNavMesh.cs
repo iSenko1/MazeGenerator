@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class EnemyNavMesh : MonoBehaviour
 {
@@ -15,7 +17,7 @@ public class EnemyNavMesh : MonoBehaviour
     private Transform player;  // to keep a reference to the player
     private float nextAttackTime;
     private bool hasAttackedThisCycle = false; // New field to track whether the enemy has attacked during the current animation cycle
-
+    private CharacterController playerCharacterController; // Reference to the player's CharacterController component
 
 
     public bool isNavMeshReady = false;
@@ -127,6 +129,11 @@ public class EnemyNavMesh : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        GameObject playerObj = GameObject.FindWithTag("Player");
+        if (playerObj)
+        {
+            playerCharacterController = playerObj.GetComponent<CharacterController>();
+        }
         // If we have already attacked this cycle, return immediately
         if (hasAttackedThisCycle)
         {
@@ -141,6 +148,22 @@ public class EnemyNavMesh : MonoBehaviour
             Debug.Log("HIT!!!");
             healthComponent.TakeDamage(1);
             hasAttackedThisCycle = true;
+
+            // Call Respawn function if health is above 0
+            if (healthComponent.currentHealth > 0)
+            {
+                playerCharacterController.enabled = false;
+                player.Respawn();
+                playerCharacterController.enabled = true;
+            }
+            else // Load main menu if no more health
+            {
+                Debug.Log("Game Over, loading main menu...");
+                GameManager.instance.gameIsRunning = false;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                SceneManager.LoadScene(0);
+            }
         }
     }
 }
