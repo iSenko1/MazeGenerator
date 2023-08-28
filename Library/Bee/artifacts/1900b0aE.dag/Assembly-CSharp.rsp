@@ -373,6 +373,7 @@
 "Assets/MazeGenerator/Scripts/RecursiveMazeGenerator.cs"
 "Assets/MazeGenerator/Scripts/RecursiveTreeMazeGenerator.cs"
 "Assets/MazeGenerator/Scripts/RollerBall.cs"
+"Assets/MazeGenerator/Scripts/ShortestPathAlgorithm.cs"
 "Assets/MazeGenerator/Scripts/TreeMazeGenerator.cs"
 "Assets/OptionsMenu.cs"
 "Assets/PauseMenu.cs"

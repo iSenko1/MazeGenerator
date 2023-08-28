@@ -863,7 +863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -2074,6 +2074,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 0
+  startPosition: {x: 0, y: 0, z: 0}
   JumpSound: {fileID: 8300000, guid: 311bde2d611c7744e9b87713df344dd4, type: 3}
   HitSound: {fileID: 8300000, guid: a5548be9a9e5a6d43adb6e184f7b96bb, type: 3}
   CoinSound: {fileID: 8300000, guid: 50dee191f1af3994c99e69c8c4e2c104, type: 3}
@@ -3643,6 +3644,7 @@ GameObject:
   - component: {fileID: 949568339}
   - component: {fileID: 949568340}
   - component: {fileID: 949568341}
+  - component: {fileID: 949568342}
   m_Layer: 0
   m_Name: MazeSpawner
   m_TagString: Untagged
@@ -3691,6 +3693,7 @@ MonoBehaviour:
   CellWidth: 4
   CellHeight: 4
   AddGaps: 0
+  ExitTransform: {fileID: 0}
 --- !u!114 &949568341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3720,6 +3723,22 @@ MonoBehaviour:
   m_VoxelSize: 0.16666667
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 23800000, guid: 1fffd815219d8954a8c48de7889e5476, type: 2}
+--- !u!114 &949568342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949568338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9320953a443010744b7baf42176bcb0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  breadcrumbPrefab: {fileID: 1600224932819879643, guid: 37655c3166e842b498354cb0db4ba43e, type: 3}
+  mazeSpawner: {fileID: 949568340}
+  exitPosition: {fileID: 0}
+  playerGameObject: {fileID: 1299430401}
 --- !u!1 &953590640
 GameObject:
   m_ObjectHideFlags: 0
@@ -5210,6 +5229,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8
+  startPosition: {x: 0, y: 0, z: 0}
   JumpSound: {fileID: 8300000, guid: 311bde2d611c7744e9b87713df344dd4, type: 3}
   HitSound: {fileID: 8300000, guid: a5548be9a9e5a6d43adb6e184f7b96bb, type: 3}
   CoinSound: {fileID: 8300000, guid: 50dee191f1af3994c99e69c8c4e2c104, type: 3}
@@ -6506,7 +6526,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c205a14ed93764647b3a9fa92d800f1a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.02
+      value: 29.96
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c205a14ed93764647b3a9fa92d800f1a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6514,7 +6534,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c205a14ed93764647b3a9fa92d800f1a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.47
+      value: 16.99
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c205a14ed93764647b3a9fa92d800f1a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7540,6 +7560,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 0
+  startPosition: {x: 0, y: 0, z: 0}
   JumpSound: {fileID: 0}
   HitSound: {fileID: 0}
   CoinSound: {fileID: 0}

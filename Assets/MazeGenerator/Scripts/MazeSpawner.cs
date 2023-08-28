@@ -32,6 +32,8 @@ public class MazeSpawner : MonoBehaviour
 	public float CellHeight = 5;
 	public bool AddGaps = true;
 
+	public Transform ExitTransform;
+
 	private BasicMazeGenerator mMazeGenerator = null;
 
 	void Start()
@@ -88,6 +90,7 @@ public class MazeSpawner : MonoBehaviour
 		if (ExitPrefab != null)
 		{
 			GameObject tmp = Instantiate(ExitPrefab, exitPosition, Quaternion.Euler(0, 0, 0)) as GameObject;
+			ExitTransform = tmp.transform;  // Store the transform
 			tmp.transform.parent = transform;
 		}
 

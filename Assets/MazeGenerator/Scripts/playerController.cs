@@ -17,7 +17,7 @@ public class playerController : MonoBehaviour
     public LayerMask groundMask;
     private bool isGrounded;
     private float playerYVelocity;
-    private Vector3 startPosition;
+    public Vector3 startPosition;
     public AudioClip JumpSound = null;
     public AudioClip HitSound = null;
     public AudioClip CoinSound = null;

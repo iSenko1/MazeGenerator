@@ -33,7 +33,24 @@ public class EnemyNavMesh : MonoBehaviour
         {
             player = playerObj.transform;
         }
+        // Subscribe to the scene loaded event
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
+    // Add this method to handle scene changes
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // If the main menu scene is loaded, destroy this GameObject
+        if (scene.buildIndex == 0)  // Assuming the main menu is at build index 0
+        {
+            Destroy(gameObject);
+        }
+    }
+    // Unsubscribe when this GameObject gets destroyed
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
