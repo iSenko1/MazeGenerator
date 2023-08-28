@@ -14,6 +14,8 @@ public class EnemyNavMesh : MonoBehaviour
     BoxCollider boxCollider;
     private Transform player;  // to keep a reference to the player
     private float nextAttackTime;
+    private bool hasAttackedThisCycle = false; // New field to track whether the enemy has attacked during the current animation cycle
+
 
 
     public bool isNavMeshReady = false;
@@ -42,6 +44,14 @@ public class EnemyNavMesh : MonoBehaviour
     {
         if (isNavMeshReady)
         {
+            if (player == null)
+            {
+                // What the enemy should do if the player is no longer available
+                // For now, let's just stop the enemy
+                navMeshAgent.isStopped = true;
+                return;
+            }
+
             if (player)
             {
                 // Calculate distance to player
@@ -92,6 +102,7 @@ public class EnemyNavMesh : MonoBehaviour
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("ZombieAttack"))
         {
             animator.SetTrigger("Attack");
+            hasAttackedThisCycle = false; // Reset the attack flag whenever a new attack is initiated
         }
         /*
         if (Time.time >= nextAttackTime)
@@ -116,11 +127,20 @@ public class EnemyNavMesh : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        var player = other.GetComponent<playerController>();
+        // If we have already attacked this cycle, return immediately
+        if (hasAttackedThisCycle)
+        {
+            return;
+        }
 
-        if(player != null)
+        var player = other.GetComponent<playerController>();
+        var healthComponent = other.GetComponent<Health>();
+
+        if (healthComponent != null)
         {
             Debug.Log("HIT!!!");
+            healthComponent.TakeDamage(1);
+            hasAttackedThisCycle = true;
         }
     }
 }
