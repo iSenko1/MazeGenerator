@@ -7,6 +7,7 @@ public class ShortestPathAlgorithm : MonoBehaviour
     public GameObject breadcrumbPrefab;
     public MazeSpawner mazeSpawner;  // Drag and drop the GameObject with MazeSpawner script here through Unity Inspector
     public Transform exitPosition;
+    private float breadcrumbsShowTime = 5.0f;  // Initial time duration for breadcrumbs to be shown
     private List<GameObject> breadcrumbs = new List<GameObject>();
 
     private int rows;
@@ -105,10 +106,12 @@ public class ShortestPathAlgorithm : MonoBehaviour
             return;
         }
 
-        StartCoroutine(ShowAndHideBreadcrumbs());
+        StartCoroutine(ShowAndHideBreadcrumbs(breadcrumbsShowTime));
+
+        breadcrumbsShowTime += 5.0f;  // Increase time by 5 seconds for each subsequent call
     }
 
-    IEnumerator ShowAndHideBreadcrumbs()
+    IEnumerator ShowAndHideBreadcrumbs(float duration)
     {
         // Activate breadcrumbs
         foreach (GameObject breadcrumb in breadcrumbs)
@@ -123,8 +126,8 @@ public class ShortestPathAlgorithm : MonoBehaviour
             }
         }
 
-        // Wait for 5 seconds
-        yield return new WaitForSeconds(5.0f);
+        // Wait for 'duration' seconds
+        yield return new WaitForSeconds(duration);
 
         // Deactivate breadcrumbs
         foreach (GameObject breadcrumb in breadcrumbs)
