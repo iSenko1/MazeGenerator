@@ -26,6 +26,7 @@ public class playerController : MonoBehaviour
     [SerializeField]
     //private float startTime;
     private float playerStartTime;
+    public ShortestPathAlgorithm shortestPathAlgorithm;
 
     void Start()
     {
@@ -53,10 +54,12 @@ public class playerController : MonoBehaviour
     {
         PlayerMovement();
         GravityLogic();
+        /*
         if (Input.GetKeyDown(KeyCode.R))
         {
             Respawn();
         }
+        */
     }
     void OnDrawGizmos()
     {
@@ -177,9 +180,20 @@ public class playerController : MonoBehaviour
             }
             Destroy(other.gameObject);
             GameManager.instance.AddPoint();
+
+            if (shortestPathAlgorithm != null)
+            {
+                shortestPathAlgorithm.ShowBreadcrumbs();
+            }
+            else
+            {
+                Debug.LogError("ShortestPathAlgorithm is not set!");
+            }
+            /*
             controller.enabled = false;
             Respawn();
             controller.enabled = true;
+            */
         }
 
         if (other.gameObject.tag == "Enemy")

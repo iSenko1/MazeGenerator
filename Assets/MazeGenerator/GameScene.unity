@@ -2079,6 +2079,7 @@ MonoBehaviour:
   HitSound: {fileID: 8300000, guid: a5548be9a9e5a6d43adb6e184f7b96bb, type: 3}
   CoinSound: {fileID: 8300000, guid: 50dee191f1af3994c99e69c8c4e2c104, type: 3}
   playerStartTime: 0
+  shortestPathAlgorithm: {fileID: 0}
 --- !u!143 &651717643
 CharacterController:
   m_ObjectHideFlags: 0
@@ -5234,6 +5235,7 @@ MonoBehaviour:
   HitSound: {fileID: 8300000, guid: a5548be9a9e5a6d43adb6e184f7b96bb, type: 3}
   CoinSound: {fileID: 8300000, guid: 50dee191f1af3994c99e69c8c4e2c104, type: 3}
   playerStartTime: 0
+  shortestPathAlgorithm: {fileID: 949568342}
 --- !u!143 &1299430405
 CharacterController:
   m_ObjectHideFlags: 0
@@ -6526,7 +6528,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c205a14ed93764647b3a9fa92d800f1a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 29.96
+      value: 26.82
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c205a14ed93764647b3a9fa92d800f1a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6534,7 +6536,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c205a14ed93764647b3a9fa92d800f1a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.99
+      value: 24.39
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c205a14ed93764647b3a9fa92d800f1a, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7565,6 +7567,7 @@ MonoBehaviour:
   HitSound: {fileID: 0}
   CoinSound: {fileID: 0}
   playerStartTime: 0
+  shortestPathAlgorithm: {fileID: 0}
 --- !u!143 &1618707851
 CharacterController:
   m_ObjectHideFlags: 0

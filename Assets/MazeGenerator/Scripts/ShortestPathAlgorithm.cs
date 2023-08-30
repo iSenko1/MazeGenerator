@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class ShortestPathAlgorithm : MonoBehaviour
     public GameObject breadcrumbPrefab;
     public MazeSpawner mazeSpawner;  // Drag and drop the GameObject with MazeSpawner script here through Unity Inspector
     public Transform exitPosition;
+    private List<GameObject> breadcrumbs = new List<GameObject>();
 
     private int rows;
     private int columns;
@@ -16,25 +18,20 @@ public class ShortestPathAlgorithm : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        // Get the playerController component from the player GameObject
         playerController playerCtrl = playerGameObject.GetComponent<playerController>();
 
-        // Make sure you initialize mazeSpawner before using its properties
         if (mazeSpawner == null)
         {
             mazeSpawner = GetComponent<MazeSpawner>();
         }
 
-        // Now it's safe to use its properties
         rows = mazeSpawner.Rows;
         columns = mazeSpawner.Columns;
         cellSize = new Vector3(mazeSpawner.CellWidth, 0, mazeSpawner.CellHeight);
 
-        // Set the class member exitPosition instead of declaring a new local one
         exitPosition = mazeSpawner.ExitTransform;
         Debug.Log("Starting breadcrumb generation");
 
-        // Initialize the breadcrumbs with the startPosition from the playerController
         CreateBreadcrumbs(playerCtrl.startPosition);
     }
 
@@ -63,7 +60,9 @@ public class ShortestPathAlgorithm : MonoBehaviour
                 Debug.Log("Found the exit cell, creating breadcrumbs.");
                 while (Vector3.Distance(currentCell, startCell) > 0.01f)
                 {
-                    Instantiate(breadcrumbPrefab, currentCell + new Vector3(0, 0.5f, 0), Quaternion.identity);
+                    GameObject breadcrumb = Instantiate(breadcrumbPrefab, currentCell + new Vector3(0, 0.5f, 0), Quaternion.identity);
+                    breadcrumb.SetActive(false);  // Hide breadcrumb
+                    breadcrumbs.Add(breadcrumb); // Add to the list
 
                     // Debug Log
                     Debug.Log("Placing breadcrumb at: " + currentCell);
@@ -73,7 +72,9 @@ public class ShortestPathAlgorithm : MonoBehaviour
                     currentCell = parent[row, col].Value;
                 }
                 // Place the breadcrumb at the start cell too
-                Instantiate(breadcrumbPrefab, startCell + new Vector3(0, 0.5f, 0), Quaternion.identity);
+                GameObject startBreadcrumb = Instantiate(breadcrumbPrefab, startCell + new Vector3(0, 0.5f, 0), Quaternion.identity);
+                startBreadcrumb.SetActive(false);  // Hide breadcrumb
+                breadcrumbs.Add(startBreadcrumb); // Add to the list
                 return;
             }
 
@@ -89,6 +90,48 @@ public class ShortestPathAlgorithm : MonoBehaviour
                     parent[row, col] = currentCell;
                     queue.Enqueue(adjacentCell);
                 }
+            }
+        }
+    }
+
+
+    public void ShowBreadcrumbs()
+    {
+        Debug.Log("ShowBreadcrumbs function called.");
+
+        if (breadcrumbs.Count == 0)
+        {
+            Debug.Log("No breadcrumbs to show!");
+            return;
+        }
+
+        StartCoroutine(ShowAndHideBreadcrumbs());
+    }
+
+    IEnumerator ShowAndHideBreadcrumbs()
+    {
+        // Activate breadcrumbs
+        foreach (GameObject breadcrumb in breadcrumbs)
+        {
+            if (breadcrumb != null)
+            {
+                breadcrumb.SetActive(true);  // Show breadcrumb
+            }
+            else
+            {
+                Debug.Log("Found a null breadcrumb in the list");
+            }
+        }
+
+        // Wait for 5 seconds
+        yield return new WaitForSeconds(5.0f);
+
+        // Deactivate breadcrumbs
+        foreach (GameObject breadcrumb in breadcrumbs)
+        {
+            if (breadcrumb != null)
+            {
+                breadcrumb.SetActive(false);  // Hide breadcrumb
             }
         }
     }
