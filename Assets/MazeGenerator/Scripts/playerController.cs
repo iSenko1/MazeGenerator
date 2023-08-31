@@ -189,11 +189,11 @@ public class playerController : MonoBehaviour
             {
                 Debug.LogError("ShortestPathAlgorithm is not set!");
             }
-            /*
+            
             controller.enabled = false;
             Respawn();
             controller.enabled = true;
-            */
+            
         }
 
         if (other.gameObject.tag == "Enemy")
